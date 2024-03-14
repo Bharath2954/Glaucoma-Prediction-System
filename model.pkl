@@ -1,0 +1,28 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.externals import joblib
+
+# Load your glaucoma dataset (replace 'dataset.csv' with your dataset)
+data = pd.read_csv('dataset.csv')
+
+# Define features and target variable
+X = data[['age', 'intraocular_pressure', 'family_history']]
+y = data['glaucoma_status']  # 1 for glaucoma, 0 for no glaucoma
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Data preprocessing
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train a Logistic Regression model
+model = LogisticRegression()
+model.fit(X_train_scaled, y_train)
+
+# Save the trained model and scaler to files
+joblib.dump(model, 'model.pkl')
+joblib.dump(scaler, 'scaler.pkl')

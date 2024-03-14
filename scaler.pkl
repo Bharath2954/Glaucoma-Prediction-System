@@ -1,0 +1,13 @@
+import pickle
+from sklearn.preprocessing import StandardScaler  # You can replace this with the scaler you're using
+
+# Create a scaler instance (replace this with your actual scaler)
+scaler = StandardScaler()
+
+# Fit the scaler to your data (you should replace this with your data)
+data = [[1.0, 2.0], [2.0, 3.0], [3.0, 4.0]]
+scaler.fit(data)
+
+# Save the scaler to a .pkl file
+with open('scaler.pkl', 'wb') as scaler_file:
+    pickle.dump(scaler, scaler_file)

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glaucoma Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Glaucoma Prediction</h1>
+    </header>
+    <div class="container">
+        <form id="glaucomaForm">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="intraocularPressure">Intraocular Pressure (mmHg):</label>
+            <input type="number" id="intraocularPressure" name="intraocularPressure" required>
+
+            <label for="familyHistory">Family History of Glaucoma:(Enter 0 for NO and 1 for YES)</label>
+            <input type="number" id="familyHistory" name="familyHistory" required>
+
+            <label for="corneaThickness">Thickness of Cornea:</label>
+            <input type="number" id="corneaThickness" name="corneaThickness" required>
+
+            <label for="bloodPressure">Blood Pressure:</label>
+            <input type="number" id="bloodPressure" name="bloodPressure" required>
+
+            <label for="Diabetes">Do you have Diabetes:(Yes/NO)</label>
+            <input type="text" id="Diabetes" name="Diabetes" required>
+
+            <label for="imageInput">Upload X - Ray:</label>
+            <input type="file" id="imageInput" name="imageInput" accept="image/*">
+            <br>
+            <button type="button" onclick="predictGlaucoma()">Predict</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function predictGlaucoma() {
+            const age = document.getElementById("age").value;
+            const intraocularPressure = document.getElementById("intraocularPressure").value;
+            const familyHistory = document.getElementById("familyHistory").value;
+
+            let predictionResult;
+
+            if ((familyHistory!=0 && familyHistory!=1) || intraocularPressure<0 || age<=0)
+            {
+                predictionResult = "Enter valid details.";
+            }
+            else if((age > 35 && intraocularPressure >= 21 && familyHistory==1)||(age > 15 && intraocularPressure > 40))
+            {
+                predictionResult = "You have high risk of Glaucoma.";
+            }
+            else if((age > 35 && intraocularPressure >= 21 && familyHistory==0)||(age < 36 && intraocularPressure >= 21 && familyHistory == 1))
+            {
+                predictionResult = "You may have risk of Glaucoma. Kindly Consult the Doctor.";
+            }
+            else if(age > 65 && intraocularPressure >= 19 && familyHistory==0)
+            {
+                predictionResult = "You may have risk of Glaucoma. Kindly Consult the Doctor.";                
+            }
+            else if(familyHistory==1 && intraocularPressure > 20)
+            {
+                predictionResult = "There is Chance of Glaucoma. Kindly Consult the Doctor.";
+            }
+            else
+            {
+                predictionResult = "Your Intraocular Pressure Level is Normal.";
+            }
+            document.getElementById("result").innerHTML = `<h3>Prediction Result:${predictionResult}</h3>`;
+        }
+    </script>
+</body>
+</html>
